@@ -1,87 +1,97 @@
-# 🛡️ Kebijakan Privasi (Privacy Policy) — Latte_Cocoa Bot
+# Privacy Policy
 
-*Terakhir Diperbarui: 25 Juli 2026*
+**Last updated:** 1 November 2026
 
-Kebijakan Privasi ini menjelaskan bagaimana **Latte_Cocoa** (selanjutnya disebut "Bot", mencakup bot Latte dan Cocoa) mengumpulkan, menggunakan, menyimpan, dan melindungi informasi Anda. Dengan menambahkan Bot ke server Discord Anda, menggunakan perintahnya, atau masuk ke Web Dashboard kami, Anda menyetujui praktik data yang dijelaskan dalam kebijakan ini.
+This policy explains how **Latte** handles information when you use the Latte Discord application, its web dashboard, and its music features. Latte is operated as part of Latte Cocoa.
 
----
+**Cocoa and any other companion bot are music-only.** They do not use the Server Members intent and do not run the welcome feature.
 
-## 1. Informasi yang Kami Kumpulkan
 
-Kami mengumpulkan data seminimal mungkin untuk memastikan fitur pemutaran musik, pengaturan kustom, integrasi Last.fm, dan Web Dashboard dapat berfungsi dengan baik.
+## What Latte does
 
-### A. Data Otomatis dari Discord
-Ketika Bot aktif di server Anda, kami membaca data berikut melalui API Discord:
-*   **ID Pengguna & Nama Pengguna Discord:** Untuk mengidentifikasi siapa yang meminta lagu (*requester*), melacak kontributor lagu, mengelola playlist pribadi, dan memproses login dashboard.
-*   **ID Server (Guild ID) & Nama Server:** Untuk menyimpan konfigurasi khusus server (seperti prefix kustom, volume default, dan peran DJ).
-*   **ID Saluran Suara & Teks (Channel ID):** Untuk menghubungkan bot ke saluran suara yang tepat dan mengirim pesan pemutar musik di saluran teks yang sesuai.
-*   **Status Suara (Voice State):** Untuk melacak keberadaan pengguna di saluran suara guna menerapkan pembatasan kendali musik (misalnya memastikan pengguna berada di saluran suara yang sama dengan bot).
-*   **Role ID Pengguna:** Untuk memverifikasi kewenangan pengguna (seperti apakah mereka memiliki DJ Role atau izin administrator).
+Latte plays music in Discord voice channels through slash commands and a web player. A server administrator can also turn on an optional welcome feature. When that feature is enabled, Latte can:
 
-### B. Data yang Disimpan di Database Cloud (Turso/libSQL)
-Kami menyimpan data berikut secara persisten di database cloud kami untuk mendukung fitur lanjutan bot:
-*   **Pengaturan Server (Guild Settings):** Konfigurasi prefix, volume default, bahasa bot, DJ role yang ditentukan, status auto-play, pengaturan radio 24/7 (termasuk saluran dan mood radio), serta preferensi sticky embed.
-*   **Cadangan Antrean (Queue Backup):** Data lagu dalam antrean saat ini yang dicadangkan agar pemutaran musik dapat dilanjutkan secara otomatis apabila bot terputus atau melakukan restart.
-*   **Riwayat Pemutaran Lagu (Song History):** Catatan lagu yang telah diputar di server, meliputi judul lagu, nama artis, URL sumber, durasi lagu, ID dan nama peminta lagu, serta waktu lagu diputar.
-*   **Pengaturan Pengguna (User Settings):** Volume personal, status suara, emoji kustom, prefix kustom, serta tautan akun Last.fm (nama pengguna Last.fm dan session key jika diaktifkan).
-*   **Koleksi Playlist Pribadi (User Playlists):** Playlist kustom yang dibuat pengguna, nama playlist, status dibagikan (*shared*), daftar lagu di dalamnya (judul, artis, URL, sumber platform, gambar cover art, dan durasi).
-*   **Lagu yang Disukai (Liked Songs):** Koleksi lagu yang ditandai sebagai favorit oleh pengguna (judul, artis, URL, durasi, dan cover art).
+- send a message, embed, or generated welcome card when a member joins;
+- send an optional direct message to the new member;
+- add or remove roles selected by the server, with an optional delay and a humans, bots, or everyone filter;
+- announce when a member leaves;
+- announce when a member is banned;
+- thank a member when they boost the server.
 
-### C. Data Dashboard & API Web
-Saat Anda masuk ke Web Dashboard menggunakan Discord OAuth2:
-*   **Discord OAuth2 (Identify Scope):** Kami meminta izin akses minimal untuk membaca profil publik Anda (User ID, username, avatar, dan daftar server Anda) guna memverifikasi apakah Anda memiliki izin untuk mengontrol pemutar musik di server tertentu.
-*   **Cookies & Sesi (Session Cookie):** Kami menyimpan cookie sesi di browser Anda yang berlaku selama 30 hari untuk menjaga status login Anda agar tidak perlu masuk ulang setiap kali membuka dashboard.
+The welcome feature does nothing until a member with the Manage Server permission chooses a channel and saves the configuration.
 
----
+## Information we process
 
-## 2. Bagaimana Kami Menggunakan Data Anda
+### Discord account and server information
 
-Kami menggunakan data yang dikumpulkan semata-mata untuk mendukung fungsionalitas bot:
-*   **Operasional Pemutaran Musik:** Menghubungkan bot ke saluran suara, memutar lagu yang diminta, dan menampilkan antarmuka Now Playing.
-*   **Penyimpanan Preferensi:** Menyimpan pengaturan khusus server dan profil kustom Anda agar tetap konsisten setiap kali bot digunakan.
-*   **Statistik & Rekomendasi:** Menghasilkan tangga lagu terpopuler (*Top Charts*), statistik pendengar, serta merekomendasikan lagu baru (menggunakan pencarian iTunes API berdasarkan artis favorit Anda).
-*   **Integrasi Last.fm:** Mengirimkan data pemutaran lagu ke profil Last.fm Anda secara otomatis (*scrobbling*) jika Anda mengaktifkan fitur ini.
-*   **Keamanan & Kontrol Dashboard:** Memastikan kontrol pemutaran di Web Dashboard hanya dapat diakses oleh pengguna yang berwenang (misalnya pengguna yang sedang berada di saluran suara yang sama dengan bot).
+- Server ID, channel ID, and role ID needed to run a command or deliver a configured message.
+- For a join, leave, ban, or boost event: the affected member's user ID, username, and avatar. These are used only to build that message or card. They are not saved as a member profile.
+- User ID and display name of a person who requests a song, creates a playlist, likes a song, or votes for the bot.
+- Song title, artist, URL, duration, and artwork needed for playback, history, playlists, and liked songs.
+- Voice-channel membership needed to join a channel and control playback. Latte does not request the Presence intent.
+- Dashboard login uses Discord OAuth with the **identify** scope only. The session stores your Discord user ID, username, and avatar so the dashboard can recognize you. Latte does not request your email address, server list, or connected accounts.
 
----
+### Information we store
 
-## 3. Pembagian Data dengan Pihak Ketiga
+- Music settings for a server, such as volume, DJ role, and 24/7 voice channel.
+- Your playlists, liked songs, and song-play history.
+- Welcome settings for a server, including the selected channel, message template, embed options, card options, direct-message text, and role IDs.
+- The user ID of the administrator who last saved those welcome settings.
+- A Last.fm username and session key, only if you choose to connect Last.fm.
+- A vote record containing your user ID, the bot, the voting site, and the time of the vote.
 
-Kami **tidak pernah menjual, menyewakan, atau membagikan** data pribadi Anda kepada pihak ketiga untuk keperluan periklanan atau pemasaran. Data Anda hanya dikirimkan ke pihak ketiga berikut demi kebutuhan operasional bot:
-*   **Discord API:** Seluruh interaksi bot tunduk pada [Kebijakan Privasi Discord](https://discord.com/privacy).
-*   **Lavalink Nodes & Provider Audio (YouTube, Spotify, SoundCloud, dll.):** Kami mengirimkan informasi pencarian lagu atau URL lagu ke server Lavalink untuk memutar audio. Tidak ada data pribadi pengguna Discord yang dikirimkan ke layanan ini.
-*   **Last.fm API:** Jika Anda mengintegrasikan akun Last.fm, data musik yang sedang diputar akan dikirim ke Last.fm sesuai dengan [Kebijakan Privasi Last.fm](https://www.last.fm/legal/privacy).
-*   **iTunes API:** Digunakan secara anonim untuk mengambil rekomendasi lagu dan gambar cover album.
+Latte does **not** store a copy of a server's member list. Latte does **not** read the content of messages and does not request the Message Content intent.
 
----
+## Why Latte uses the Server Members intent
 
-## 4. Retensi dan Penghapusan Data
+Latte requests Discord's privileged Server Members intent only to receive member events after a server enables the welcome feature:
 
-Kami berkomitmen untuk tidak menyimpan data lebih lama dari yang diperlukan:
-*   **Riwayat Pemutaran (History):** Riwayat pemutaran lagu (*Song History*) di server akan dihapus secara otomatis dari database setelah **30 hari**.
-*   **Penghapusan Mandiri:** Anda dapat menghapus lagu dari playlist atau liked songs Anda kapan saja langsung melalui Web Dashboard atau perintah bot.
-*   **Penghapusan Data Permanen:** Jika Anda ingin menghapus seluruh data pengguna Anda (termasuk playlist, liked songs, dan integrasi Last.fm) secara permanen dari database kami, Anda dapat menghubungi administrator bot.
-*   **Data Server Setelah Bot Keluar:** Jika bot dikeluarkan dari server (*kick/leave*), data konfigurasi server akan tetap disimpan agar pengaturan Anda tidak hilang jika Anda mengundang bot kembali. Namun, pemilik server dapat meminta penghapusan data server secara permanen dengan menghubungi administrator bot.
+- **Guild Member Add:** identify the member who joined so Latte can send the configured welcome, optional direct message, and auto-role changes.
+- **Guild Member Remove:** identify the member who left so Latte can send the configured goodbye message.
+- **Guild Member Update:** detect when a member starts boosting the server and send the configured thank-you message.
 
----
+Ban announcements use Discord's ban event and do not require this intent. Latte does not page through, export, or analyze a server's member list. Automatic role changes require the Manage Roles permission and can change only roles below Latte's highest role.
 
-## 5. Keamanan Data
+## How we use information
 
-Kami menerapkan langkah-langkah keamanan untuk melindungi data Anda:
-*   Semua data disimpan pada **Turso Cloud Database** yang terlindungi dengan autentikasi token cloud yang ketat.
-*   Transmisi data antara Bot, Web Dashboard, dan Discord API terenkripsi menggunakan protokol HTTPS/WSS aman.
-*   Token API sensitif disimpan dalam file konfigurasi lingkungan (`.env`) yang terisolasi dari publik.
+We use the information above to:
 
----
+- play and control music;
+- show your playlists, history, and dashboard pages;
+- deliver welcome messages configured by a server administrator;
+- prevent the same vote from being counted twice;
+- protect the service from abuse and diagnose errors.
 
-## 6. Perubahan pada Kebijakan Privasi ini
+We do not sell personal information and we do not use it for advertising.
 
-Kebijakan Privasi ini dapat diperbarui dari waktu ke waktu untuk menyesuaikan dengan fitur baru bot atau perubahan kebijakan Discord. Perubahan akan langsung berlaku setelah dokumen ini diperbarui di repositori bot. Penggunaan berkelanjutan atas layanan kami setelah perubahan kebijakan berarti Anda menerima kebijakan yang diperbarui tersebut.
+## Service providers
 
----
+The following services process information only as needed to operate Latte:
 
-## 7. Kontak dan Hubungi Kami
+- **Discord**, for the bot platform, login, and gateway events.
+- **The audio node** used to search for and stream a requested track.
+- **The database provider** that stores the settings, playlists, history, votes, and welcome configuration described above.
+- **Last.fm**, only if you connect a Last.fm account.
+- **Top.gg and Discord Bot List**, which receive bot statistics such as the number of servers and process vote notifications. They do not receive server member lists.
 
-Jika Anda memiliki pertanyaan, keluhan, atau ingin mengajukan permohonan penghapusan data pribadi Anda, silakan hubungi tim pengembang/administrator bot melalui:
-*   Mengirimkan pesan langsung ke pemilik bot (menggunakan ID yang tercantum dalam file konfigurasi bot).
-*   Melalui server Discord resmi kami (jika tersedia).
+## Retention and deletion
+
+Welcome settings remain until an administrator changes them. Removing Latte from a server stops welcome processing for that server. Playlists, liked songs, and playback history remain so those features continue to work. You can delete your own playlists and liked songs from the dashboard.
+
+To request deletion of information tied to your Discord user ID, contact us through the support server listed below. We may retain a record for as long as needed to prevent abuse, resolve a security incident, or meet a legal obligation.
+
+## Security
+
+Dashboard access to welcome settings requires a Discord login and the Manage Server permission in that server. Bot tokens and other secrets are not published in this repository. No storage or transmission method is completely secure.
+
+## Children
+
+Latte is not directed at children under 13, and we do not knowingly collect personal information from children.
+
+## Changes to this policy
+
+We may update this policy when Latte's features change. The date at the top is the latest version. Continued use of Latte after an update means you accept the revised policy.
+
+## Contact
+
+Questions and deletion requests: [Latte Cocoa support server](https://discord.gg/MpBK2YVppY)
